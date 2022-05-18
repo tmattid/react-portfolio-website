@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Loader from 'react-loaders'
 import AnimatedLetters from '../AnimatedLetters'
-import LogoTitle from '../../assets/images/logo-s.png'
-import Logo from './Logo'
+import LogoTitle from '../../assets/images/logo-t.png'
+import Logo from './Logo/Logo.tsx'
 import './index.scss'
 
 const Home = () => {
   const [letterClass, setLetterClass] = useState('text-animate')
 
-  const nameArray = ['l', 'o', 'b', 'o', 'd', 'a', 'n']
+  const nameArray = ['a', 'y', 'l', 'o', 'r']
   const jobArray = [
     'w',
     'e',
@@ -44,10 +44,21 @@ const Home = () => {
             <span className={`${letterClass} _13`}>I</span>
             <span className={`${letterClass} _14`}>'m</span>
             <img
+              style={{
+                position: 'relative',
+                left: 15,
+                top: 16,
+                width: '15%',
+                marginLeft: -10,
+                filter: 'grayscale(1) invert(1)',
+              }}
               src={LogoTitle}
               alt="JavaScript Developer Name, Web Developer Name"
             />
             <AnimatedLetters
+              style={{
+                flexDirection: 'row',
+              }}
               letterClass={letterClass}
               strArray={nameArray}
               idx={15}
