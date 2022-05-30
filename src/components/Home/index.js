@@ -11,11 +11,18 @@ const Home = () => {
 
   const nameArray = ['a', 'y', 'l', 'o', 'r']
   const jobArray = [
-    'w',
-    'e',
-    'b',
+    'F',
+    'u',
+    'l',
+    'l',
+    '-',
+    'S',
+    't',
+    'a',
+    'c',
+    'k',
     ' ',
-    'd',
+    'D',
     'e',
     'v',
     'e',
@@ -24,7 +31,6 @@ const Home = () => {
     'p',
     'e',
     'r',
-    '.',
   ]
 
   useEffect(() => {
@@ -67,10 +73,10 @@ const Home = () => {
             <AnimatedLetters
               letterClass={letterClass}
               strArray={jobArray}
-              idx={22}
+              idx={16}
             />
           </h1>
-          <h2>Front End Developer / JavaScript Expert / Youtuber</h2>
+          <h2>Full Stack Developer / JavaScript/React/.Net/SQL </h2>
           <Link to="/contact" className="flat-button">
             CONTACT ME
           </Link>
@@ -78,7 +84,7 @@ const Home = () => {
         <Logo />
       </div>
 
-      <Loader type="pacman" />
+      <Loader type="line-scale-pulse-out" />
     </>
   )
 }
