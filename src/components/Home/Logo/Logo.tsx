@@ -1,5 +1,9 @@
 import React, { useRef, useEffect } from 'react'
 import { useSpring, animated, to } from '@react-spring/web'
+import Box from '@mui/material/Box';
+import VideoPlayer from "react-background-video-player";
+import Fade from '@mui/material/Fade';
+
 
 import { useGesture } from 'react-use-gesture'
 import img from '../Logo/data'
@@ -18,7 +22,14 @@ const wheel = (y: number) => {
 }
 
 export default function Logo() {
+
+
+
+
   useEffect(() => {
+    
+    console.log(img)
+    
     const preventDefault = (e: Event) => e.preventDefault()
     document.addEventListener('gesturestart', preventDefault)
     document.addEventListener('gesturechange', preventDefault)
@@ -39,10 +50,15 @@ export default function Logo() {
       zoom: 0,
       x: 0,
       y: 0,
-      config: { mass: 5, tension: 350, friction: 40 },
+      config: { mass: 5, tension: 100, friction: 40 },
     })
   )
 
+  const [checked, setChecked] = React.useState(true);
+
+  const handleChange = () => {
+    setChecked((prev) => !prev);
+  };
 
   
 
@@ -58,7 +74,7 @@ export default function Logo() {
         api({
           rotateX: calcX(py, y.get()),
           rotateY: calcY(px, x.get()),
-          scale: 1.1,
+          scale: 1.4,
         }),
       onHover: ({ hovering }) =>
         !hovering && api({ rotateX: 0, rotateY: 0, scale: 1 }),
@@ -70,14 +86,16 @@ export default function Logo() {
     { domTarget, eventOptions: { passive: false } }
   )
   
-
+  console.log(wheelY.to(wheel))
 
 
   return (
     <div className={styles.container}>
+      
       <animated.div
         ref={domTarget}
         className={styles.card}
+       
         style={{
           transform: 'perspective(600px)',
           x,
@@ -88,14 +106,30 @@ export default function Logo() {
           rotateZ,
         }}>
           
+          <div>
+    {image.map((img, i) =>  <p style={{color: 'white'}} key={img.id}>{img.image}</p>)} </div>
+  
+    <VideoPlayer
+        className="video"
+        src={
+          "https://assets.mixkit.co/videos/preview/mixkit-bubbles-of-water-rising-to-the-surface-186-large.mp4"
+        }
+        autoPlay={true}
+        muted={true}
+      />
+        <animated.div style={{ transform: wheelY.to(wheel), }} >
+          
+          
+          
        
-        <animated.div style={{ transform: wheelY.to(wheel) }}>
-      
           {image.map((img, i) => (
-            <div key={i} style={{ backgroundImage: `url(${img})` }} />
+             <Fade in={checked}>
+            <Box  onChange={handleChange} key={img.id} style={{ backgroundImage: `url(${img.image})`  }}>
+            </Box>
+            </Fade>
           ))}
+          
                 
-       
    
  
   
