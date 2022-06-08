@@ -158,7 +158,7 @@ const FunctionComponent = () => {
        
           {image.map((img, i) => (
            
-             <Fade in={img.id===0 || img.id>0 }>
+             <Fade key={img.id} in={img.id===0 || img.id>0 }>
              
             <Box  onChange={handleChange} key={img.id} style={{ backgroundImage: `url(${img.image})`,  }}>
           
