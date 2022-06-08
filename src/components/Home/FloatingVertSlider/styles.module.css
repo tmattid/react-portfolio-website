@@ -2,7 +2,7 @@
     position: relative;
     left: 300px;
     width: 50%;
-    height: 70%;
+    height: 80%;
     margin: 30%;
     background: grey;
     /* border-radius: 5px; */
@@ -13,36 +13,36 @@
     cursor: grab;
     overflow: hidden;
     touch-action: none;
+    
   }
   
   .card:hover {
+    
     box-shadow: 0px 30px 100px -10px rgba(0, 0, 0, 0.4);
   }
   
   .card > div {
-    
+    /* position: 100vh; */
     height: 500px;
-    width: 500px;
+    width: 90%;
     margin: auto;
-  align-items: center;
-  justify-content: center;
-  vertical-align: middle;
-  /* border: 1px solid #dbe4ed; */
   
-
-
-    
-    margin: 5vw 5;
+    /* align-items: center; */
+    /* justify-content: center; */
+    vertical-align: middle;
+    margin: auto;
   }
   
   .card > div > * {
     height: 100%;
-    width: 100%;
+    /* width: 100%; */
+   
     background-size: contain;
-background-repeat: no-repeat;
-    background-position: center center;
-    margin: auto;
-  display: block;
+    background-repeat: no-repeat;
+    background-position: center;
+    
+    /* display: block; */
+  
   }
   
   .container {

@@ -1,6 +1,6 @@
 .logo-container {
-  z-index: 0;
-  width: 400px;
+  z-index: 1;
+  width: auto;
   height: 500;
   opacity: 0;
   position: absolute;
@@ -14,7 +14,7 @@
     width: 100%;
     height: auto;
     bottom: 0;
-    transform: rotateZ(30deg) !important;
+    transform: rotateZ(0deg) !important;
   }
 
   .solid-logo {
@@ -26,7 +26,7 @@
     margin: auto;
     width: 100%;
     opacity: 0;
-    transform: rotateZ(30deg) !important;
+    transform: rotateZ(10deg) !important;
     z-index: 1;
   }
 }

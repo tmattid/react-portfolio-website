@@ -19,16 +19,16 @@ const img = [
   },
   {
     id: 4,
-    image:
-      'https://drscdn.500px.org/photo/227760547/w%3D440_h%3D440/v2?webp=true&v=0&sig=d00bd3de4cdc411116f82bcc4a4e8a6375ed90a686df8488088bca4b02188c73',
+    image: 'https://i.imgur.com/P50vi5b.png',
   },
+
   {
     id: 5,
-    image: 'https://i.imgur.com/CWHFS8O.png',
+    image: 'https://i.imgur.com/lrbSIT1.png',
   },
   {
     id: 6,
-    image: 'https://i.imgur.com/lrbSIT1.png',
+    image: '',
   },
 ]
 

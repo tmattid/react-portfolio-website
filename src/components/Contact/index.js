@@ -20,7 +20,12 @@ const Contact = () => {
     e.preventDefault()
 
     emailjs
-      .sendForm('gmail', 'template_YeJhZkgb', form.current, 'your-token')
+      .sendForm(
+        'service_ksnse0a',
+        'template_wcks7oi',
+        form.current,
+        'MDfOJQURLmICCPaFX'
+      )
       .then(
         () => {
           alert('Message successfully sent!')
@@ -85,18 +90,19 @@ const Contact = () => {
           </div>
         </div>
         <div className="info-map">
-          Slobodan Gajić,
+          Taylor Mattison,
           <br />
-          Serbia,
+          Orange County, California
           <br />
-          Branka RadiČevića 19, 22000 <br />
-          Sremska Mitrovica <br />
           <br />
-          <span>freelancerslobodan@gmail.com</span>
+          <span>Email: tmattid@gmail.com</span>
         </div>
         <div className="map-wrap">
           <MapContainer center={[33.892047, -117.886026]} zoom={13}>
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            <TileLayer
+              url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png"
+              attribution='&copy; <a href="Esri &mdash">Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community</a> contributors'
+            />
             <Marker position={[44.96366, 19.61045]}>
               <Popup>Taylor lives here, come over for a cup of coffee :)</Popup>
             </Marker>

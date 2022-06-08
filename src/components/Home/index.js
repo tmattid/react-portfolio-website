@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import Loader from 'react-loaders'
 import AnimatedLetters from '../AnimatedLetters'
 import LogoTitle from '../../assets/images/logo-t.png'
-import Logo from './Logo/Logo.tsx'
+import Logo from './FloatingVertSlider/Logo.tsx'
 import './index.scss'
 
 const Home = () => {
@@ -53,7 +53,7 @@ const Home = () => {
               style={{
                 position: 'relative',
                 left: 15,
-                top: 16,
+                top: 22,
                 width: '15%',
                 marginLeft: -10,
                 filter: 'grayscale(1) invert(1)',

@@ -6,19 +6,19 @@ import Fade from '@mui/material/Fade';
 
 
 import { useGesture } from 'react-use-gesture'
-import img from '../Logo/data'
+import img from './data'
 
-import styles from '../Logo/styles.module.css'
+import styles from '../FloatingVertSlider/styles.module.css'
 
-const calcX = (y: number, ly: number) => -(y - ly - window.innerHeight / 2) / 20
-const calcY = (x: number, lx: number) => (x - lx - window.innerWidth / 2) / 20
+const calcX = (y: number, ly: number) => -(y - ly - window.innerHeight / 2) / 40
+const calcY = (x: number, lx: number) => (x - lx - window.innerWidth / 2) / 80
 console.log([img])
 
 const image = img
 
 const wheel = (y: number) => {
-  const imgHeight = window.innerWidth * 0.3 - 20
-  return `translateY(${-imgHeight * (y < 0 ? 6 : 1) - (y % (imgHeight * 5))}px`
+  const imgHeight = window.innerWidth * 0.4 - 200
+  return `translateY(${-imgHeight * (y < 0 ? 6 : 1) - (y % (imgHeight * 7))}px`
 }
 
 export default function Logo() {
@@ -44,13 +44,13 @@ export default function Logo() {
   const [{ x, y, rotateX, rotateY, rotateZ, zoom, scale }, api] = useSpring(
     () => ({
       rotateX: 0,
-      rotateY: 0,
+      rotateY: -20,
       rotateZ: 0,
       scale: 1,
       zoom: 0,
       x: 0,
       y: 0,
-      config: { mass: 5, tension: 100, friction: 40 },
+      config: { mass: 5, tension: 100, friction: 50 },
     })
   )
 
@@ -68,7 +68,7 @@ export default function Logo() {
     {
       onDrag: ({ active, offset: [x, y] }) =>
         api({ x, y, rotateX: 0, rotateY: 0, scale: active ? 1 : 1.1 }),
-      onPinch: ({ offset: [d, a] }) => api({ zoom: d / 200, rotateZ: a }),
+      onPinch: ({ offset: [d, a] }) => api({ zoom: d / 1000, rotateZ: a }),
       onMove: ({ xy: [px, py], dragging }) =>
         !dragging &&
         api({
@@ -77,7 +77,7 @@ export default function Logo() {
           scale: 1.4,
         }),
       onHover: ({ hovering }) =>
-        !hovering && api({ rotateX: 0, rotateY: 0, scale: 1 }),
+        !hovering && api({ rotateX: 0, rotateY: -10, scale: 1 }),
       onWheel: ({ event, offset: [, y] }) => {
         event.preventDefault()
         wheelApi.set({ wheelY: y })
@@ -123,12 +123,18 @@ export default function Logo() {
           
        
           {image.map((img, i) => (
+           
              <Fade in={checked}>
-            <Box  onChange={handleChange} key={img.id} style={{ backgroundImage: `url(${img.image})`  }}>
-            </Box>
-            </Fade>
-          ))}
+             
+            <Box  onChange={handleChange} key={img.id} style={{ backgroundImage: `url(${img.image})`,  }}>
           
+            </Box>
+            
+            
+            </Fade>
+            
+          ))}
+          <Box height={1000}></Box>
                 
    
  
