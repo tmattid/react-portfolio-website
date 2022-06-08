@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { useSpring, animated, to } from '@react-spring/web'
 import Box from '@mui/material/Box';
 import VideoPlayer from "react-background-video-player";
@@ -11,18 +11,59 @@ import img from './data'
 import styles from '../FloatingVertSlider/styles.module.css'
 
 const calcX = (y: number, ly: number) => -(y - ly - window.innerHeight / 2) / 40
-const calcY = (x: number, lx: number) => (x - lx - window.innerWidth / 2) / 80
+const calcY = (x: number, lx: number) => (x - lx - window.innerWidth / 2) / 40
 console.log([img])
 
 const image = img
 
 const wheel = (y: number) => {
   const imgHeight = window.innerWidth * 0.4 - 200
-  return `translateY(${-imgHeight * (y < 0 ? 6 : 1) - (y % (imgHeight * 7))}px`
+  return `translateY(${-imgHeight * (y < 0 ? 6 : 1) - (y % (imgHeight * 6))}px`
 }
 
 export default function Logo() {
 
+
+
+// Create an interface for the size of the window
+interface Size {
+  width: number;
+  height: number;
+}
+
+const FunctionComponent = () => {
+  // The size of the window
+  const [, setSize] = useState<Size>();
+
+  // This function updates the state thus re-render components
+  const resizeHanlder = () => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    setSize({
+      width: width,
+      height: height,
+    });
+  };
+
+  // Listening for the window resize event
+  useEffect(() => {
+    window.onresize = resizeHanlder;
+
+    // You can also use:
+    // window.addEventListener('resize', resizeHanlder);
+  }, []);
+
+  return (<VideoPlayer
+    className="video"
+    src={
+      "https://assets.mixkit.co/videos/preview/mixkit-bubbles-of-water-rising-to-the-surface-186-large.mp4"
+    }
+    autoPlay={true}
+    muted={true}
+  ></VideoPlayer>)
+  ;
+};
 
 
 
@@ -54,7 +95,7 @@ export default function Logo() {
     })
   )
 
-  const [checked, setChecked] = React.useState(true);
+  const [, setChecked] = React.useState(true);
 
   const handleChange = () => {
     setChecked((prev) => !prev);
@@ -109,14 +150,7 @@ export default function Logo() {
           <div>
     {image.map((img, i) =>  <p style={{color: 'white'}} key={img.id}>{img.image}</p>)} </div>
   
-    <VideoPlayer
-        className="video"
-        src={
-          "https://assets.mixkit.co/videos/preview/mixkit-bubbles-of-water-rising-to-the-surface-186-large.mp4"
-        }
-        autoPlay={true}
-        muted={true}
-      />
+    <FunctionComponent/>
         <animated.div style={{ transform: wheelY.to(wheel), }} >
           
           
@@ -124,7 +158,7 @@ export default function Logo() {
        
           {image.map((img, i) => (
            
-             <Fade in={checked}>
+             <Fade in={img.id===0 || img.id>0 }>
              
             <Box  onChange={handleChange} key={img.id} style={{ backgroundImage: `url(${img.image})`,  }}>
           
