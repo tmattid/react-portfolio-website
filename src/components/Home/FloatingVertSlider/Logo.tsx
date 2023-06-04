@@ -1,86 +1,39 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { useSpring, animated, to } from '@react-spring/web'
-import Box from '@mui/material/Box';
-import VideoPlayer from "react-background-video-player";
-import Fade from '@mui/material/Fade';
-
-
+import Box from '@mui/material/Box'
+import VideoPlayer from 'react-background-video-player'
+import Fade from '@mui/material/Fade'
 import { useGesture } from 'react-use-gesture'
 import img from './data'
-
 import styles from '../FloatingVertSlider/styles.module.css'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import '../../../styles.module.css' // Import the CSS file for transition styles
 
-const calcX = (y: number, ly: number) => -(y - ly - window.innerHeight / 2) / 40
-const calcY = (x: number, lx: number) => (x - lx - window.innerWidth / 2) / 40
-console.log([img])
-
+const calcX = (y, ly) => -(y - ly - window.innerHeight / 2) / 40
+const calcY = (x, lx) => (x - lx - window.innerWidth / 2) / 40
 const image = img
 
-const wheel = (y: number) => {
-  const imgHeight = window.innerWidth * 0.4 - 200
-  return `translateY(${-imgHeight * (y < 0 ? 6 : 1) - (y % (imgHeight * 6))}px`
+interface FunctionComponentProps {
+  size: {
+    width: number
+    height: number
+  }
+}
+
+const FunctionComponent: React.FC<FunctionComponentProps> = ({ size }) => {
+  return (
+    <VideoPlayer
+      className="video"
+      src="https://player.vimeo.com/external/395445056.hd.mp4?s=4e97eeb64de222d60330a6f0454ac643cae56c5f&profile_id=172&oauth2_token_id=57447761"
+      autoPlay={true}
+      muted={true}
+      style={{ width: `${size.width/2}px`, height: `${size.height/2}px`, }}
+      
+    />
+  )
 }
 
 export default function Logo() {
-
-
-
-// Create an interface for the size of the window
-interface Size {
-  width: number;
-  height: number;
-}
-
-const FunctionComponent = () => {
-  // The size of the window
-  const [, setSize] = useState<Size>();
-
-  // This function updates the state thus re-render components
-  const resizeHanlder = () => {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-
-    setSize({
-      width: width,
-      height: height,
-    });
-  };
-
-  // Listening for the window resize event
-  useEffect(() => {
-    window.onresize = resizeHanlder;
-
-    // You can also use:
-    // window.addEventListener('resize', resizeHanlder);
-  }, []);
-
-  return (<VideoPlayer
-    className="video"
-    src={
-      "https://assets.mixkit.co/videos/preview/mixkit-bubbles-of-water-rising-to-the-surface-186-large.mp4"
-    }
-    autoPlay={true}
-    muted={true}
-  ></VideoPlayer>)
-  ;
-};
-
-
-
-  useEffect(() => {
-    
-    console.log(img)
-    
-    const preventDefault = (e: Event) => e.preventDefault()
-    document.addEventListener('gesturestart', preventDefault)
-    document.addEventListener('gesturechange', preventDefault)
-
-    return () => {
-      document.removeEventListener('gesturestart', preventDefault)
-      document.removeEventListener('gesturechange', preventDefault)
-    }
-  }, [])
-
   const domTarget = useRef(null)
   const [{ x, y, rotateX, rotateY, rotateZ, zoom, scale }, api] = useSpring(
     () => ({
@@ -95,48 +48,87 @@ const FunctionComponent = () => {
     })
   )
 
-  const [, setChecked] = React.useState(true);
+  const [size, setSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  })
+
+  useEffect(() => {
+    const resizeHandler = () => {
+      const width = window.innerWidth
+      const height = window.innerHeight
+
+      setSize({
+        width: width,
+        height: height,
+      })
+    }
+
+    window.addEventListener('resize', resizeHandler)
+
+    return () => {
+      window.removeEventListener('resize', resizeHandler)
+    }
+  }, [])
+
+  const [, setChecked] = useState(true)
 
   const handleChange = () => {
-    setChecked((prev) => !prev);
-  };
+    setChecked((prev) => !prev)
+  }
 
-  
+  useEffect(() => {
+    const preventDefault = (e) => e.preventDefault()
+    document.addEventListener('gesturestart', preventDefault)
+    document.addEventListener('gesturechange', preventDefault)
 
-  const [{ wheelY }, wheelApi] = useSpring(() => ({ wheelY: 0 }))
+    return () => {
+      document.removeEventListener('gesturestart', preventDefault)
+      document.removeEventListener('gesturechange', preventDefault)
+    }
+  }, [])
+
+  const visibleImages = 1 // Number of visible images at a time
+  const totalImages = image.length
+
+  const [visibleImageIndices, setVisibleImageIndices] = useState(
+    Array.from({ length: visibleImages }, (_, i) => i)
+  )
+
+  useEffect(() => {
+    const autoScroll = setInterval(() => {
+      setVisibleImageIndices(
+        visibleImageIndices.map((imageIndex) => (imageIndex + 1) % totalImages)
+      )
+    }, 10000)
+
+    return () => clearInterval(autoScroll)
+  }, [visibleImageIndices])
 
   useGesture(
     {
       onDrag: ({ active, offset: [x, y] }) =>
         api({ x, y, rotateX: 0, rotateY: 0, scale: active ? 1 : 1.1 }),
-      onPinch: ({ offset: [d, a] }) => api({ zoom: d / 1000, rotateZ: a }),
+      onPinch: ({ offset: [d, a] }) => api({ zoom: d / 200, rotateZ: a }),
       onMove: ({ xy: [px, py], dragging }) =>
         !dragging &&
         api({
           rotateX: calcX(py, y.get()),
           rotateY: calcY(px, x.get()),
-          scale: 1.4,
+          scale: 1.2,
         }),
       onHover: ({ hovering }) =>
         !hovering && api({ rotateX: 0, rotateY: -10, scale: 1 }),
-      onWheel: ({ event, offset: [, y] }) => {
-        event.preventDefault()
-        wheelApi.set({ wheelY: y })
-      },
     },
     { domTarget, eventOptions: { passive: false } }
   )
-  
-  console.log(wheelY.to(wheel))
-
 
   return (
-    <div className={styles.container}>
-      
+    <div className="">
       <animated.div
         ref={domTarget}
-        className={styles.card}
-       
+        //add bootstrap class
+        
         style={{
           transform: 'perspective(600px)',
           x,
@@ -145,34 +137,43 @@ const FunctionComponent = () => {
           rotateX,
           rotateY,
           rotateZ,
-        }}>
-          
-          <div>
-    {image.map((img, i) =>  <p style={{color: 'white'}} key={img.id}>{img.image}</p>)} </div>
-  
-    <FunctionComponent/>
-        <animated.div style={{ transform: wheelY.to(wheel), }} >
-          
-          
-          
-       
+        }}
+      >
+        <div>
           {image.map((img, i) => (
-           
-             <Fade key={img.id} in={img.id===0 || img.id>0 }>
-             
-            <Box  onChange={handleChange} key={img.id} style={{ backgroundImage: `url(${img.image})`,  }}>
-          
-            </Box>
-            
-            
-            </Fade>
-            
+            <p style={{ color: 'white' }} key={img.id}>
+              {img.image}
+            </p>
           ))}
-          <Box height={1000}></Box>
-                
-   
- 
-  
+        </div>
+        <FunctionComponent size={size} />
+        <animated.div>
+          {visibleImageIndices.map((imageIndex, i) => {
+            const imgStyle = {
+              backgroundImage: `url(${image[imageIndex].image})`,
+              backgroundSize: 'contain',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+              width: '100%',
+              height: '100%',
+              opacity: 1, // Initially set opacity to 1 for fade-in effect
+              transition: 'opacity 0.5s ease-out', // Add transition for opacity
+
+              // Add any additional styling properties here
+            }
+
+            return (
+              <Box
+                key={imageIndex}
+                className={styles.scrollUp}
+                style={imgStyle}
+                onChange={handleChange}
+                sx={{
+                  opacity: visibleImageIndices.includes(imageIndex) ? 1 : 0, // Set opacity to 0 for fade-out effect
+                }}
+              />
+            )
+          })}
         </animated.div>
       </animated.div>
     </div>
