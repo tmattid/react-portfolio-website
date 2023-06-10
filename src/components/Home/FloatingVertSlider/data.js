@@ -1,6 +1,6 @@
 // import rosehip from '../../../assets/images/Rosehip.Png'
 
-const img = [
+const imgs = [
   {
     id: 0,
     image: 'https://i.imgur.com/ugccB86.jpg',
@@ -32,4 +32,4 @@ const img = [
   },
 ]
 
-export default img
+export default imgs

@@ -1,8 +1,13 @@
-.page {
-  width: 100%;
-  height: 100%;
+.content-wrapper {
   position: absolute;
+  top: 0;
+  left: 60px;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
 }
+
+
 
 .top-tags {
   bottom: auto;
@@ -23,32 +28,37 @@
   margin-left: -20px;
 }
 
-.container {
+.map-wrap {
+  width: 100%; /* Add this line */
+  height: 100%; /* Add this line */
+  position: relative; /* Add this line */
+  z-index: 100; /* Add this line */
+  overflow: hidden; /* Add this line */
+}
+
+.page {
   width: 100%;
-  will-change: contents;
-  height: 90%;
-  min-height: 566px;
+  height: 100%;
   position: absolute;
-  opacity: 0;
-  top: 5%;
-  margin: 0 auto;
-  z-index: 1;
-  transform-style: preserve-3d;
-  animation: fadeIn 1s forwards;
-  animation-delay: 1s;
+  display: flex; /* Add this line */
+}
+
+.container {
+  flex: 1; /* Add this line */
+  width: auto; /* Update this line */
+  height: 100%;
+  min-height: 566px;
+  position: relative; /* Update this line */
+  opacity: 1; /* Update this line */
+  margin: 0; /* Update this line */
+  top: 0; /* Update this line */
+  z-index: 0; /* Update this line */
 }
 
 .container.contact-page,
 .container.about-page {
   .text-zone {
-    position: absolute;
-    left: 10%;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 35%;
-    vertical-align: middle;
-    display: table-cell;
-    max-height: 90%;
+  
 
     h1 {
       font-size: 53px;
@@ -58,7 +68,7 @@
       margin-top: 0;
       position: relative;
       margin-bottom: 40px;
-      left: -10px;
+      left: -70px;
 
       &:before {
         content: '<h1>';

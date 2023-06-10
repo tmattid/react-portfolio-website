@@ -1,10 +1,10 @@
 .home-page {
+  display: flex;
+  align-items: center;
   .text-zone {
-    position: absolute;
     left: 10%;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40%;
+
+   
     max-height: 90%;
   }
 
@@ -25,7 +25,6 @@
       font-size: 18px;
       position: absolute;
       margin-top: -40px;
-      left: -15px;
       opacity: 0.6;
     }
 

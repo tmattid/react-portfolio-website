@@ -12,3 +12,9 @@ body {
   overflow: hidden;
   display: block;
 }
+
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

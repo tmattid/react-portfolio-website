@@ -1,109 +1,75 @@
-import React, { useRef, useState, useEffect } from 'react'
-import { useSpring, animated, to } from '@react-spring/web'
-import Box from '@mui/material/Box'
-import VideoPlayer from 'react-background-video-player'
-import Fade from '@mui/material/Fade'
-import { useGesture } from 'react-use-gesture'
-import img from './data'
-import styles from '../FloatingVertSlider/styles.module.css'
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
-import '../../../styles.module.css' // Import the CSS file for transition styles
+import React, { useRef, useEffect, useState } from 'react';
+import { useSpring, animated, to } from '@react-spring/web';
+import { useGesture } from 'react-use-gesture';
+import imgs from './data';
+import Experience from './Experience/Experience';
+import BackgroundVideo from './Background Video/BackgroundVideo'; // import new component
 
-const calcX = (y, ly) => -(y - ly - window.innerHeight / 2) / 40
-const calcY = (x, lx) => (x - lx - window.innerWidth / 2) / 40
-const image = img
+import styles from './styles.module.css';
 
-interface FunctionComponentProps {
-  size: {
-    width: number
-    height: number
-  }
-}
+const calcX = (y, ly) => -(y - ly - window.innerHeight / 2) / 40;
+const calcY = (x, lx) => (x - lx - window.innerWidth / 2) / 40;
 
-const FunctionComponent: React.FC<FunctionComponentProps> = ({ size }) => {
-  return (
-    <VideoPlayer
-      className="video"
-      src="https://player.vimeo.com/external/395445056.hd.mp4?s=4e97eeb64de222d60330a6f0454ac643cae56c5f&profile_id=172&oauth2_token_id=57447761"
-      autoPlay={true}
-      muted={true}
-      style={{ width: `${size.width/2}px`, height: `${size.height/2}px`, }}
-      
-    />
-  )
-}
+const wheel = (y) => {
+  const imgHeight = window.innerWidth * 0.3 - 20;
+  const scrollOffset = y % (imgHeight * 5);
+  const totalScrollHeight = imgHeight * 5;
+  const translateY =
+    -imgHeight * (y < 0 ? 6 : 1) - scrollOffset + totalScrollHeight / 2; // Adjust the scroll offset to center the component
 
-export default function Logo() {
-  const domTarget = useRef(null)
-  const [{ x, y, rotateX, rotateY, rotateZ, zoom, scale }, api] = useSpring(
-    () => ({
-      rotateX: 0,
-      rotateY: -20,
-      rotateZ: 0,
-      scale: 1,
-      zoom: 0,
-      x: 0,
-      y: 0,
-      config: { mass: 5, tension: 100, friction: 50 },
-    })
-  )
+  // Add logic to control the scroll behavior
+  const maxScrollOffset = totalScrollHeight / 2;
+  const minScrollOffset = -totalScrollHeight * 5.5;
+  const clampedY = Math.max(minScrollOffset, Math.min(maxScrollOffset, translateY)) - 100; // Adjust the starting position by subtracting 100
 
+  return `translateY(${clampedY}px)`;
+};
+
+export default function App() {
   const [size, setSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
-  })
+  });
 
   useEffect(() => {
-    const resizeHandler = () => {
-      const width = window.innerWidth
-      const height = window.innerHeight
-
+    const handleResize = () => {
       setSize({
-        width: width,
-        height: height,
-      })
-    }
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
 
-    window.addEventListener('resize', resizeHandler)
-
-    return () => {
-      window.removeEventListener('resize', resizeHandler)
-    }
-  }, [])
-
-  const [, setChecked] = useState(true)
-
-  const handleChange = () => {
-    setChecked((prev) => !prev)
-  }
-
-  useEffect(() => {
-    const preventDefault = (e) => e.preventDefault()
-    document.addEventListener('gesturestart', preventDefault)
-    document.addEventListener('gesturechange', preventDefault)
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      document.removeEventListener('gesturestart', preventDefault)
-      document.removeEventListener('gesturechange', preventDefault)
-    }
-  }, [])
-
-  const visibleImages = 1 // Number of visible images at a time
-  const totalImages = image.length
-
-  const [visibleImageIndices, setVisibleImageIndices] = useState(
-    Array.from({ length: visibleImages }, (_, i) => i)
-  )
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
-    const autoScroll = setInterval(() => {
-      setVisibleImageIndices(
-        visibleImageIndices.map((imageIndex) => (imageIndex + 1) % totalImages)
-      )
-    }, 10000)
+    const preventDefault = (e) => e.preventDefault();
+    document.addEventListener('gesturestart', preventDefault);
+    document.addEventListener('gesturechange', preventDefault);
 
-    return () => clearInterval(autoScroll)
-  }, [visibleImageIndices])
+    return () => {
+      document.removeEventListener('gesturestart', preventDefault);
+      document.removeEventListener('gesturechange', preventDefault);
+    };
+  }, []);
+
+  const domTarget = useRef(null);
+  const [{ x, y, rotateX, rotateY, rotateZ, zoom, scale }, api] = useSpring(() => ({
+    rotateX: 0,
+    rotateY: 0,
+    rotateZ: 0,
+    scale: 1,
+    zoom: 0,
+    x: 0,
+    y: 0,
+    config: { mass: 5, tension: 350, friction: 40 },
+  }));
+
+  const [{ wheelY }, wheelApi] = useSpring(() => ({ wheelY: 0 }));
 
   useGesture(
     {
@@ -113,69 +79,50 @@ export default function Logo() {
       onMove: ({ xy: [px, py], dragging }) =>
         !dragging &&
         api({
-          rotateX: calcX(py, y.get()),
-          rotateY: calcY(px, x.get()),
-          scale: 1.2,
+          rotateX: calcX(py, y.get()) / 2,
+          rotateY: -calcY(px, x.get()) / 2,
+          scale: 1.05,
         }),
       onHover: ({ hovering }) =>
-        !hovering && api({ rotateX: 0, rotateY: -10, scale: 1 }),
+        !hovering && api({ rotateX: 0, rotateY: 0, scale: 1 }),
+      onWheel: ({ event, offset: [, y] }) => {
+        event.preventDefault();
+        wheelApi.set({ wheelY: y });
+      },
     },
     { domTarget, eventOptions: { passive: false } }
-  )
+  );
 
   return (
-    <div className="">
-      <animated.div
-        ref={domTarget}
-        //add bootstrap class
-        
-        style={{
-          transform: 'perspective(600px)',
-          x,
-          y,
-          scale: to([scale, zoom], (s, z) => s + z),
-          rotateX,
-          rotateY,
-          rotateZ,
-        }}
-      >
-        <div>
-          {image.map((img, i) => (
-            <p style={{ color: 'white' }} key={img.id}>
-              {img.image}
-            </p>
-          ))}
-        </div>
-        <FunctionComponent size={size} />
-        <animated.div>
-          {visibleImageIndices.map((imageIndex, i) => {
-            const imgStyle = {
-              backgroundImage: `url(${image[imageIndex].image})`,
-              backgroundSize: 'contain',
-              backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'center',
-              width: '100%',
-              height: '100%',
-              opacity: 1, // Initially set opacity to 1 for fade-in effect
-              transition: 'opacity 0.5s ease-out', // Add transition for opacity
+    <div className={styles.container} style={{ height: '100vh' }}>
+  <animated.div
+    ref={domTarget}
+    className={styles.card}
+    style={{
+      transform: 'perspective(600px)',
+      x,
+      y,
+      scale: to([scale, zoom], (s, z) => s + z),
+      rotateX,
+      rotateY,
+      rotateZ,
+    }}
+  >
+    <BackgroundVideo size={size} />
+    <animated.div
+      style={{
+        transform: wheelY.to(wheel),
+        marginTop: '-100px', // Add marginTop: '-100px' to move the Experience data up
+      }}
+    >
+      <div style={{ zIndex: 1000 }}>
+        {Array.from({ length: 1}).map((_, index) => (
+          <Experience key={index} />
+        ))}
+      </div>
+    </animated.div>
+  </animated.div>
+</div>
 
-              // Add any additional styling properties here
-            }
-
-            return (
-              <Box
-                key={imageIndex}
-                className={styles.scrollUp}
-                style={imgStyle}
-                onChange={handleChange}
-                sx={{
-                  opacity: visibleImageIndices.includes(imageIndex) ? 1 : 0, // Set opacity to 0 for fade-out effect
-                }}
-              />
-            )
-          })}
-        </animated.div>
-      </animated.div>
-    </div>
-  )
+  );
 }
