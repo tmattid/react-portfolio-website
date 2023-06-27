@@ -36,4 +36,12 @@
     height: 100%;
     justify-content: center;
   }
+
+  .adjust-date .vertical-timeline-element-date {
+    margin-left: 20px !important;
+  }
   
+  .vertical-timeline-element-icon > img {
+    border-radius: 50% !important;
+    /* add your other styles here */
+  }

@@ -15,7 +15,7 @@ const Layout = () => {
         {/* Navbar content */}
       </div>
       <div className="content-wrapper">
-        <div className="overflow-auto flex flex-col flex-grow">
+        <div className="overflow-hidden flex flex-col flex-grow " style={{height: "100%"}}>
           <span className="tags top-tags">&lt;body&gt;</span>
           <Outlet />
           <span className="tags bottom-tags">

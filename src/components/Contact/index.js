@@ -39,10 +39,10 @@ const Contact = () => {
 
   return (
     <>
-      <div className="container contact-page p-0">
+      <div className="container contact-page p-0 mx-auto" style={{paddingLeft: 100}}>
         <div className="flex flex-wrap w-full">
-            <div className="w-full md:w-1/2 h-screen pr-4 flex items-center">
-            <div className="text-zone">
+            <div className="w-full md:w-1/3  h-screen pr-4 flex items-center py-5">
+            <div className="text-zone ">
               <h1>
                 <AnimatedLetters
                   letterClass={letterClass}
@@ -105,8 +105,8 @@ const Contact = () => {
               </div>
             </div>
           </div>
-            <div className="w-full md:w-1/2  ">
-            <div className="info-map">
+            <div className="w-full md:w-2/3  ">
+            <div className="info-map" >
               Taylor Mattison,
               <br />
               Orange County, California
@@ -115,20 +115,20 @@ const Contact = () => {
               <span>Email: tmattid@gmail.com</span>
             </div>
 
-            <div className="map-wrap ">
+            <div className="map-wrap ml-5">
               <MapContainer
                 center={[33.892047, -117.886026]}
                 zoom={13}
-                className=""
+               
               >
                 <TileLayer
                   url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png"
                   
                 />
-                <Marker position={[44.96366, 19.61045]}>
-                  <Popup>
+                <Marker position={[33.88518604275391, -117.88531372682414]}  className="h-screen">
+                  {/* <Popup>
                     Taylor lives here, come over for a cup of coffee :)
-                  </Popup>
+                  </Popup> */}
                 </Marker>
               </MapContainer>
             </div>

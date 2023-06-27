@@ -9,6 +9,9 @@ $primary-color: white;
 @tailwind components;
 @tailwind utilities;
 
+.adjust-date .vertical-timeline-element-date {
+  margin-inline: 20px !important;
+}
 
 @font-face {
   font-family: 'Helvetica Neue';

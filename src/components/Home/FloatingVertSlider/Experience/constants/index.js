@@ -15,10 +15,8 @@ import {
   git,
   figma,
   docker,
-  meta,
-  starbucks,
-  tesla,
-  shopify,
+  rosehip,
+  msi,
   carrent,
   jobit,
   tripguide,
@@ -116,58 +114,40 @@ const technologies = [
 
 const experiences = [
   {
-    title: "React.js Developer",
-    company_name: "Starbucks",
-    icon: starbucks,
+    title: "Software Programmer II",
+    company_name: "MSI",
+    icon: msi,
     iconBg: "#383E56",
-    date: "March 2020 - April 2021",
+    date: "Jun 2022 - Present",
     points: [
-      "Developing and maintaining web applications using React.js and other related technologies.",
-      "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-      "Implementing responsive design and ensuring cross-browser compatibility.",
-      "Participating in code reviews and providing constructive feedback to other developers.",
+      "Working as a full-time Software Programmer II in Orange, California, United States.",
+      "Developing enterprise-level software for large scale hardware use cases, demonstrating a strong understanding of system architecture and design.",
+      "Utilizing WebSocket technology for real-time, bi-directional communication between the server and the client, enhancing the performance and user experience of the applications.",
+      "Employing tools like Jira for project management and AG Grid for data management in web applications.",
+      "Focusing on Front-End development using Angular, crafting intuitive and dynamic user interfaces.",
+      "Implementing Version Control strategies with Git to maintain code integrity and manage changes, contributing to the overall stability and reliability of the software."
     ],
   },
   {
-    title: "React Native Developer",
-    company_name: "Tesla",
-    icon: tesla,
+    title: "Full Stack Software Engineer",
+    company_name: "Rosehip",
+    icon: rosehip,
     iconBg: "#E6DEDD",
-    date: "Jan 2021 - Feb 2022",
+    date: "Oct 2021 - Jun 2022",
     points: [
-      "Developing and maintaining web applications using React.js and other related technologies.",
-      "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-      "Implementing responsive design and ensuring cross-browser compatibility.",
-      "Participating in code reviews and providing constructive feedback to other developers.",
-    ],
-  },
-  {
-    title: "Web Developer",
-    company_name: "Shopify",
-    icon: shopify,
-    iconBg: "#383E56",
-    date: "Jan 2022 - Jan 2023",
-    points: [
-      "Developing and maintaining web applications using React.js and other related technologies.",
-      "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-      "Implementing responsive design and ensuring cross-browser compatibility.",
-      "Participating in code reviews and providing constructive feedback to other developers.",
-    ],
-  },
-  {
-    title: "Full stack Developer",
-    company_name: "Meta",
-    icon: meta,
-    iconBg: "#E6DEDD",
-    date: "Jan 2023 - Present",
-    points: [
-      "Developing and maintaining web applications using React.js and other related technologies.",
-      "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-      "Implementing responsive design and ensuring cross-browser compatibility.",
-      "Participating in code reviews and providing constructive feedback to other developers.",
+      "Contracted as a Full Stack Software Engineer for Rosehip (formerly known as Chamomile), a consumer health and research web application specializing in holistic health, meditation, storytelling, natural health, and research.",
+      "Developed reusable front-end components in React utilizing role-based user access and designed responsive web pages with search, pagination, and form elements.",
+      "Created a customer FAQs content page with data sorting, filtering, routing, and mapping processes.",
+      "Designed and implemented RESTFul APIs to connect to SQL Server using ADO.NET.",
+      "Created tables and stored procedures in SQL utilizing primary keys, foreign keys, joins, look-up tables, junction tables, and date and time functions.",
+      "Implemented User-Defined Tables (UDT’s) for dynamic data collection in SQL.",
+      "Used Git and GitHub for source control and repo management of the project.",
+      "Participated in daily team stand-ups, conducted code reviews, and debugged utilizing AGILE methodologies.",
+      "Implemented third-party libraries such as Formik, Yup, and Toastr for form validation and notifications."
     ],
   },
 ];
+
 
 const testimonials = [
   {

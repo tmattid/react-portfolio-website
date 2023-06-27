@@ -59,7 +59,7 @@ const Home = () => {
   return (
     <>
       <div className="container-fluid home-page h-screen flex w-screen" style={{ justifyContent: 'space-evenly' }}>
-  <div className="md:w-100 lg:w-1/3">
+  <div className="md:w-100 lg:w-50">
     <div className="text-zone w-100">
       <h1>
         <span className={letterClass}>H</span>
@@ -107,15 +107,23 @@ const Home = () => {
       <h2 className="text-lg md:text-xl lg:text-2xl font-bold mt-4">Full Stack Developer / JavaScript/React/.Net/SQL </h2>
       <Link
         to="/contact"
-        className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-4 inline-block transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+        className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-4 inline-block transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 mr-4"
       >
         CONTACT ME
       </Link>
+      <a
+        href="https://www.linkedin.com/in/taylor-mattison/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-4 inline-block transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+      >
+        LinkedIn
+      </a>
     </div>
   </div>
   {shouldDisplayLogo && (
     <div className="w-2/3 sm:w-1/2 flex items-center justify-center mt-8">
-      <div className="w-full lg:w-1/2">
+      <div className="w-full lg:w-100">
         <Logo />
       </div>
     </div>
