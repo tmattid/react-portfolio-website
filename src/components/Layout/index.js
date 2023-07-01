@@ -1,10 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import Sidebar from '../Sidebar/'
 import './index.scss'
-//import Logo component
-import Logo from '.././Home//FloatingVertSlider//Logo.tsx'
-
-import './index.scss'
 
 const Layout = () => {
   return (
@@ -15,8 +11,11 @@ const Layout = () => {
         {/* Navbar content */}
       </div>
       <div className="content-wrapper">
+   
         <div className="overflow-hidden flex flex-col flex-grow " style={{height: "100%"}}>
+        {/* <StripeGradient /> */}
           <span className="tags top-tags">&lt;body&gt;</span>
+          
           <Outlet />
           <span className="tags bottom-tags">
             &lt;/body&gt;
