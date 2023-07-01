@@ -120,7 +120,7 @@ export default function App() {
       {
        
         onHover: ({ hovering }) => {
-          !hovering ? setScrollSpeed(1) : setScrollSpeed(0); // If hovering, speed is 0, else 1
+          !hovering ? setScrollSpeed(5) : setScrollSpeed(0); // If hovering, speed is 0, else 1
         },
        
       },
